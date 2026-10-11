@@ -174,58 +174,63 @@ function Header({
     <header
       className={`absolute z-20 top-0 right-0 left-0 h-[var(--header-h)] px-4 pt-2 backdrop-blur-xl ${headerBg}`}
     >
-      <div className="h-full flex items-center gap-3">
-        {item.back ? (
-          <button
-            className="w-[46px] h-[46px] border-0 rounded-full grid place-items-center text-[#4a3b50] bg-[#f7f2f8]"
-            onClick={() => navigate("accounts")}
-            aria-label="Zurück"
-          >
-            <Icon name="back" size={28} />
-          </button>
-        ) : (
-          <span className="relative inline-block">
-            <UserIcon className="w-8 h-8 fill-black/90" />
-            <span className="absolute -top-1 -right-1.5 flex items-center justify-center w-5 h-5 text-sm font-semibold leading-none text-white bg-red-500 rounded-full z-10">
-              3
+      <div className="h-full flex items-center justify-between gap-0  bg-white/10">
+        <div className="flex items-center  rounded-full bg-white px-2 py-1">
+          {item.back ? (
+            <button
+              className="w-[52px] h-[52px] border-0 rounded-full grid place-items-center text-[#4a3b50] bg-[#f7f2f8]"
+              onClick={() => navigate("accounts")}
+              aria-label="Zurück"
+            >
+              {/* was default 26 — now 32 */}
+              <Icon name="back" size={32} />
+            </button>
+          ) : (
+            <span className="relative -ml-1.5 inline-block w-10 h-10">
+              {/* lucide defaults to 24px unless you set width/height */}
+              <UserIcon className="w-10 h-10 fill-black/90" strokeWidth={1.6} />
+              <span className="absolute -top-1 -right-2 flex items-center justify-center w-6 h-6 text-[14px] font-semibold leading-none text-white bg-red-500 rounded-full z-10">
+                3
+              </span>
+              <div className="absolute inset-0 rounded-full border-[3px] border-white" />
             </span>
-            <div className="absolute top-0 w-8 h-8 rounded-full border-3 border-white" />
-          </span>
-        )}
-        <div className="min-w-0 flex-1">
-          <button
-            onClick={() => navigate("profile")}
-            aria-label="Profil öffnen"
-            className="flex items-center text-[20px] font-semibold px-3 py-1.5 rounded-full bg-white w-max border-0 cursor-pointer"
-          >
-            {item.title} <ChevronDown size={28} />
-          </button>
-          <small
-            className={`block mt-0.5 text-[18px] truncate ${
-              page === "transfer" || page === "cards"
-                ? "text-[#705778]"
-                : "text-[#8d8490]"
-            }`}
-          >
-            {page === "accounts"
-              ? ""
-              : page === "support"
-                ? "In der Regel sofort erreichbar"
-                : "Vivid Money"}
-          </small>
+          )}
+          <div className="min-w-0 flex-1">
+            <button
+              onClick={() => navigate("profile")}
+              aria-label="Profil öffnen"
+              className="flex items-center text-[26px] font-bold px-3.5 py-2 rounded-full bg-white w-max border-0 cursor-pointer"
+            >
+              <p className="text-[17px]"> {item.title}</p>{" "}
+              <ChevronDown size={34} />
+            </button>
+            <small
+              className={`block mt-0.5 text-[19px] truncate ${
+                page === "transfer" || page === "cards"
+                  ? "text-[#705778]"
+                  : "text-[#8d8490]"
+              }`}
+            >
+              {page === "accounts"
+                ? ""
+                : page === "support"
+                  ? "In der Regel sofort erreichbar"
+                  : "Vivid Money"}
+            </small>
+          </div>
         </div>
 
-        <div className="flex gap-6 bg-white px-3 py-1.5 rounded-full">
+        <div className="flex items-center gap-5 bg-white pl-3 py-2 rounded-full">
           {page === "accounts" && (
             <button
               className="relative inline-flex items-center justify-center text-white"
               aria-label="Hilfe"
             >
               <LuMessageSquare
-                size={26}
+                size={30}
                 className="absolute fill-[#7c21dc] text-[#7c21dc]"
               />
-              <span className="relative text-[12px] font-bold leading-none text-white">
+              <span className="relative text-[14px] font-bold leading-none text-white">
                 ?
               </span>
             </button>
@@ -239,7 +244,7 @@ function Header({
             onClick={() => navigate("support")}
             aria-label="Support-Chat"
           >
-            <FaGear size={26} className="text-[#7c21dc]" />
+            <FaGear size={30} className="text-[#7c21dc]" />
           </button>
         </div>
       </div>
