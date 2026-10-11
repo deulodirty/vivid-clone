@@ -1,0 +1,10 @@
+{
+  "description": "This mobile-first banking app offers users a seamless experience for managing finances, featuring intuitive navigation and mock data in German.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
