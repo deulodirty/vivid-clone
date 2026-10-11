@@ -1,10 +1,4 @@
-import {
-  ChevronDown,
-  Settings,
-  UserIcon,
-  UserRoundIcon,
-  X,
-} from "lucide-react";
+import { ChevronDown, UserIcon, X } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { FaGear } from "react-icons/fa6";
 import { LuMessageSquare } from "react-icons/lu";
@@ -16,7 +10,9 @@ type Page =
   | "cards"
   | "support"
   | "details"
+  | "transactions"
   | "profile";
+
 type IconName =
   | "home"
   | "swap"
@@ -34,6 +30,7 @@ type IconName =
   | "sparkle"
   | "send"
   | "lock"
+  | "receipt"
   | "eye";
 
 const paths: Record<IconName, ReactNode> = {
@@ -121,6 +118,12 @@ const paths: Record<IconName, ReactNode> = {
       <circle cx="12" cy="12" r="2.5" />
     </>
   ),
+  receipt: (
+    <>
+      <path d="M4 3h16v18l-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5-2 1.5-2-1.5V3Z" />
+      <path d="M8 8h8M8 12h8M8 16h5" />
+    </>
+  ),
 };
 
 function Icon({ name, size = 26 }: { name: IconName; size?: number }) {
@@ -141,28 +144,12 @@ function Icon({ name, size = 26 }: { name: IconName; size?: number }) {
   );
 }
 
-function Avatar({ agent = false }: { agent?: boolean }) {
-  const bg = agent
-    ? "bg-gradient-to-br from-[#edc3a7] to-[#4f2a29]"
-    : "bg-gradient-to-br from-[#d9a88c] to-[#684337]";
-  const hairColor = agent ? "bg-[#261d18]" : "bg-[#38271f]";
-  return (
-    <span
-      className={`relative flex-none w-[42px] h-[42px] overflow-hidden rounded-full ${bg}`}
-    >
-      <i className="absolute top-[7px] left-[13px] w-[15px] h-[17px] rounded-full bg-[#edba99]" />
-      <i
-        className={`absolute -bottom-[3px] left-2 w-[31px] h-[23px] rounded-t-full ${hairColor}`}
-      />
-    </span>
-  );
-}
-
 const meta: Record<Page, { title: string; back?: boolean }> = {
   accounts: { title: "Teresita Karina Di Costa" },
   interest: { title: "Zinskonto", back: true },
   transfer: { title: "Überweisen", back: true },
   cards: { title: "Karten", back: true },
+  transactions: { title: "Transaktionen", back: true },
   support: { title: "Vivid Support" },
   details: { title: "Kontodetails", back: true },
   profile: { title: "Profil" },
@@ -185,37 +172,36 @@ function Header({
 
   return (
     <header
-      className={`absolute z-20 top-0 right-0 left-0 h-[116px] px-4 pt-2 pb-3 border-b backdrop-blur-xl ${headerBg}`}
+      className={`absolute z-20 top-0 right-0 left-0 h-[var(--header-h)] px-4 pt-2 backdrop-blur-xl ${headerBg}`}
     >
-      <div className="h-[72px] flex items-center gap-3">
+      <div className="h-full flex items-center gap-3">
         {item.back ? (
           <button
-            className="w-[42px] h-[42px] border-0 rounded-full grid place-items-center text-[#4a3b50] bg-[#f7f2f8]"
+            className="w-[46px] h-[46px] border-0 rounded-full grid place-items-center text-[#4a3b50] bg-[#f7f2f8]"
             onClick={() => navigate("accounts")}
             aria-label="Zurück"
           >
-            <Icon name="back" />
+            <Icon name="back" size={28} />
           </button>
         ) : (
-          <span className="relative inline-block ">
-            <UserIcon className=" fill-black/90" />
-            <span className="absolute -top-1 -right-1.5 flex items-center justify-center w-4 h-4 text-xs font-medium leading-none text-white bg-red-500 rounded-full z-10">
+          <span className="relative inline-block">
+            <UserIcon className="w-8 h-8 fill-black/90" />
+            <span className="absolute -top-1 -right-1.5 flex items-center justify-center w-5 h-5 text-sm font-semibold leading-none text-white bg-red-500 rounded-full z-10">
               3
             </span>
-            <div className="absolute top-0 w-6 h-6 rounded-full border-3 border-white" />
+            <div className="absolute top-0 w-8 h-8 rounded-full border-3 border-white" />
           </span>
         )}
         <div className="min-w-0 flex-1">
-          {/* Title is now a button that navigates to the profile page */}
           <button
             onClick={() => navigate("profile")}
             aria-label="Profil öffnen"
-            className="flex items-center text-[16px] font-medium px-2 py-1 rounded-full bg-white w-max border-0 cursor-pointer"
+            className="flex items-center text-[20px] font-semibold px-3 py-1.5 rounded-full bg-white w-max border-0 cursor-pointer"
           >
-            {item.title} <ChevronDown size={24} />
+            {item.title} <ChevronDown size={28} />
           </button>
           <small
-            className={`block mt-0.5 text-[17px] truncate ${
+            className={`block mt-0.5 text-[18px] truncate ${
               page === "transfer" || page === "cards"
                 ? "text-[#705778]"
                 : "text-[#8d8490]"
@@ -229,17 +215,17 @@ function Header({
           </small>
         </div>
 
-        <div className="flex gap-6 bg-white px-2 py-1  rounded-full">
+        <div className="flex gap-6 bg-white px-3 py-1.5 rounded-full">
           {page === "accounts" && (
             <button
               className="relative inline-flex items-center justify-center text-white"
-              aria-label="Help"
+              aria-label="Hilfe"
             >
               <LuMessageSquare
-                size={20}
+                size={26}
                 className="absolute fill-[#7c21dc] text-[#7c21dc]"
               />
-              <span className="relative text-[10px] font-bold leading-none text-white">
+              <span className="relative text-[12px] font-bold leading-none text-white">
                 ?
               </span>
             </button>
@@ -253,7 +239,7 @@ function Header({
             onClick={() => navigate("support")}
             aria-label="Support-Chat"
           >
-            <FaGear size={20} className="text-[#7c21dc]" />
+            <FaGear size={26} className="text-[#7c21dc]" />
           </button>
         </div>
       </div>
@@ -263,6 +249,7 @@ function Header({
 
 const nav: { page: Page; label: string; icon: IconName }[] = [
   { page: "accounts", label: "Konten", icon: "home" },
+  { page: "transactions", label: "Transaktionen", icon: "receipt" },
   { page: "interest", label: "Zinsen", icon: "chart" },
   { page: "transfer", label: "Zahlen", icon: "swap" },
   { page: "cards", label: "Karten", icon: "card" },
@@ -282,20 +269,19 @@ function BottomNav({
         ? null
         : page;
   return (
-    <nav className="absolute z-30 right-0 bottom-0 left-0 h-[96px] px-1.5 pt-1.5 pb-[max(10px,env(safe-area-inset-bottom))] flex items-center bg-white/96 border-t border-[#eee8f0] shadow-[0_-8px_25px_rgba(52,31,57,0.05)] backdrop-blur-lg">
+    <nav className="absolute z-30 right-3 left-3 bottom-4 rounded-full h-[76px] px-2 pt-1.5 pb-[max(10px,env(safe-area-inset-bottom))] flex items-center bg-white/96 border border-[#eee8f0] shadow-[0_8px_25px_rgba(52,31,57,0.12)] backdrop-blur-lg">
       {nav.map((item) => (
         <button
           key={item.page}
-          className={`relative w-1/4 h-[72px] border-0 flex flex-col items-center justify-center gap-1 bg-transparent ${
-            selected === item.page ? "text-[#7924d7]" : "text-[#918a94]"
+          className={`relative flex-1 h-[60px] border-0 flex flex-col items-center justify-center gap-1 rounded-2xl transition-colors ${
+            selected === item.page
+              ? "bg-[#f3e9fb] text-[#7924d7]"
+              : "bg-transparent text-[#918a94]"
           }`}
           onClick={() => navigate(item.page)}
         >
-          {selected === item.page && (
-            <span className="absolute top-0 w-[36px] h-1 rounded bg-[#8124df]" />
-          )}
-          <Icon name={item.icon} size={30} />
-          <span className="text-[17px] font-semibold">{item.label}</span>
+          <Icon name={item.icon} size={28} />
+          <span className="text-[15px] font-semibold">{item.label}</span>
         </button>
       ))}
     </nav>
@@ -304,16 +290,13 @@ function BottomNav({
 
 function AccountsPage({ navigate }: { navigate: (page: Page) => void }) {
   const [bannerOpen, setBannerOpen] = useState(true);
-  const [investOpen, setInvestOpen] = useState(true);
 
   return (
-    <div className="min-h-full bg-white pb-4">
-      {/* Cashback banner */}
+    <div className="min-h-full pb-4">
       {bannerOpen && (
         <section className="relative mx-3 mt-3 mb-4 px-4 py-4 rounded-2xl bg-white shadow-[0_8px_16px_-4px_rgba(62,39,68,0.18)]">
           <div className="flex items-center justify-center gap-2.5">
             <img src="/alert.jpg" alt="" className="w-10 h-10" />
-
             <div className="pr-7">
               <strong className="block text-[15px] font-bold text-[#211a25]">
                 Du hast ein Recht auf Cashback
@@ -334,17 +317,15 @@ function AccountsPage({ navigate }: { navigate: (page: Page) => void }) {
         </section>
       )}
 
-      {/* Balance + add money */}
-      <section className="flex items-center justify-between px-4 pt-3 pb-4">
+      <section className="flex items-center justify-between px-4 pt- pb-4">
         <div>
           <strong className="block text-[32px] tracking-[-0.045em] text-[#211a25]">
-            255,57 €
+            230,65 €
           </strong>
           <small className="block -mt-2 text-[#8d8590] text-sm">
             Gesamtsaldo
           </small>
         </div>
-
         <button
           onClick={() => navigate("transfer")}
           className="flex items-center gap-1.5 px-4 py-[11px] border-0 rounded-2xl text-[#7c21dd] bg-[#f0eff1]/50 text-xs font-extrabold"
@@ -354,9 +335,7 @@ function AccountsPage({ navigate }: { navigate: (page: Page) => void }) {
         </button>
       </section>
 
-      {/* Pockets grid */}
       <section className="grid grid-cols-2 gap-x-3 gap-y-5 px-3">
-        {/* Money pocket */}
         <button
           onClick={() => navigate("details")}
           className="min-w-0 p-0 border-0 text-center bg-transparent"
@@ -373,14 +352,13 @@ function AccountsPage({ navigate }: { navigate: (page: Page) => void }) {
             </span>
           </div>
           <strong className="block mt-2 text-[15px] text-[#211a25]">
-            Money pocket
+            Money Pocket
           </strong>
           <small className="block -mt-0.5 text-[#8d8590] text-[13px]">
-            5.000,00 €
+            142,30 €
           </small>
         </button>
 
-        {/* Cashback */}
         <button
           onClick={() => navigate("details")}
           className="min-w-0 p-0 border-0 text-center bg-transparent"
@@ -404,7 +382,6 @@ function AccountsPage({ navigate }: { navigate: (page: Page) => void }) {
           </small>
         </button>
 
-        {/* Interest Rate Pocket */}
         <button
           onClick={() => navigate("interest")}
           className="min-w-0 p-0 border-0 text-center bg-transparent"
@@ -424,11 +401,10 @@ function AccountsPage({ navigate }: { navigate: (page: Page) => void }) {
             Interest Rate Pocket
           </strong>
           <small className="block -mt-0.5 text-[#8d8590] text-[13px]">
-            0,00 €
+            88,35 €
           </small>
         </button>
 
-        {/* Invest-Pocket */}
         <button
           onClick={() => navigate("details")}
           className="relative min-w-0 p-0 border-0 text-center bg-transparent"
@@ -476,28 +452,137 @@ function Transaction({ date, amount }: { date: string; amount: string }) {
 function InterestPage() {
   return (
     <div className="min-h-full bg-[#faf8fa]">
-      <section className="h-[240px] grid place-items-center bg-gradient-to-br from-[#9260dc] to-[#d9bde9]">
+      <section className="h-[310px] grid place-items-center bg-gradient-to-br from-[#9260dc] to-[#d9bde9]">
         <img
           src="/golden-money.png"
           alt=""
-          className="object-contain h-54 flex items-center justify-center"
+          className="object-contain h-70 rotate-[6deg] "
         />
       </section>
       <section className="px-[17px] pt-4 pb-4 bg-white">
         <small className="block text-[#756f78] text-lg">
-          <b className="text-[#30a66f]">↗ 473 €</b> · 4 % p.a.
+          <b className="text-[#30a66f]">↗ 0,24 €</b> · 4 % p.a.
         </small>
         <strong className="block mt-1 text-[52px] tracking-[-0.06em]">
-          233.67<span className="text-2xl">. 77</span> €
+          88,35<span className="text-2xl"> €</span>
         </strong>
       </section>
       <section className="px-[17px] py-4">
-        <Transaction date="Heute" amount="+18,82 €" />
-        <Transaction date="Vergangener Monat" amount="+16,92 €" />
+        <Transaction date="Heute" amount="+0,24 €" />
+        <Transaction date="Vergangener Monat" amount="+0,23 €" />
         <p className="text-[#98909a] text-[17px] leading-[1.4]">
           Deine Zinsen werden täglich berechnet und monatlich gutgeschrieben.
         </p>
       </section>
+    </div>
+  );
+}
+
+function TransactionsPage() {
+  type Tx = {
+    id: string;
+    name: string;
+    detail: string;
+    amount: number;
+    icon: IconName;
+    tint: string;
+  };
+
+  const groups: { label: string; items: Tx[] }[] = [
+    {
+      label: "Heute",
+      items: [
+        {
+          id: "t1",
+          name: "REWE Markt",
+          detail: "Kartenzahlung · 14:32",
+          amount: -8.74,
+          icon: "card",
+          tint: "bg-[#e8def7] text-[#7c21dd]",
+        },
+        {
+          id: "t2",
+          name: "Gehalt",
+          detail: "Überweisung · 09:01",
+          amount: 185.0,
+          icon: "bank",
+          tint: "bg-[#e8f7f0] text-[#22a06b]",
+        },
+        {
+          id: "t3",
+          name: "Spotify",
+          detail: "Abo · 07:00",
+          amount: -9.99,
+          icon: "sparkle",
+          tint: "bg-[#e8def7] text-[#7c21dd]",
+        },
+      ],
+    },
+  ];
+
+  function formatAmount(value: number) {
+    const sign = value < 0 ? "−" : "+";
+    const abs = Math.abs(value).toFixed(2).replace(".", ",");
+    return `${sign}${abs} €`;
+  }
+
+  return (
+    <div className="min-h-full bg-[#faf8fa] mt-6">
+      <section className="px-[17px] pt-4 pb-5 bg-white">
+        <div className="mt-1 flex flex-col">
+          <small className="block text-[#756f78] text-lg -mb-3">
+            Gesamt-Cashback
+          </small>
+          <strong className="block text-[48px] font-extrabold text-[#211a25]">
+            <span>4,80</span> €
+          </strong>
+          <span className="text-[#8d8590] text-lg -mt-3">
+            1,20 € diesen Monat verdient
+          </span>
+        </div>
+        <div className="-mx-4 mt-3">
+          <img src="/trx.jpg" alt="" />
+        </div>
+      </section>
+
+      {groups.map((group) => (
+        <section key={group.label} className="px-[17px] pt-5">
+          <h3 className="m-0 mb-2 text-[27px] font-semibold text-[#141314]">
+            Aktivitäten
+          </h3>
+          <div className="rounded-2xl bg-white shadow-[0_5px_17px_rgba(62,39,68,0.05)] overflow-hidden">
+            {group.items.map((tx) => (
+              <div
+                key={tx.id}
+                className="flex items-center gap-3 px-4 py-3.5 border-b border-[#f0ebf1] last:border-b-0"
+              >
+                <span
+                  className={`w-[46px] h-[46px] rounded-xl grid place-items-center ${tx.tint}`}
+                >
+                  <Icon name={tx.icon} size={24} />
+                </span>
+                <div className="flex-1 min-w-0">
+                  <strong className="block text-[17px] text-[#211a25] truncate">
+                    {tx.name}
+                  </strong>
+                  <small className="block mt-0.5 text-[#9a929d] text-[15px] truncate">
+                    {tx.detail}
+                  </small>
+                </div>
+                <b
+                  className={`text-[17px] ${
+                    tx.amount < 0 ? "text-[#211a25]" : "text-[#22a06b]"
+                  }`}
+                >
+                  {formatAmount(tx.amount)}
+                </b>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+
+      <div className="h-6" />
     </div>
   );
 }
@@ -536,7 +621,7 @@ function TransferPage() {
   const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", ",", "0", "back"];
 
   return (
-    <div className="relative min-h-full bg-[#c7ace4] overflow-hidden">
+    <div className="relative min-h-full bg-[#c7ace4] overflow-hidden pt-10">
       <section className="pt-[18px] pb-6">
         <div className="text-center text-[88px] font-bold tracking-[-0.08em] text-[#7723dc]">
           {amount || "0"}
@@ -807,7 +892,7 @@ function DetailsPage({ navigate }: { navigate: (page: Page) => void }) {
         </span>
         <small className="block mt-3 opacity-75 text-[17px]">Hauptkonto</small>
         <strong className="block mt-1 text-[54px] tracking-[-0.05em]">
-          8.620,00 €
+          142,30 €
         </strong>
         <p className="m-0 mt-1.5 opacity-70 text-[17px]">Deutsche IBAN</p>
       </section>
@@ -929,38 +1014,43 @@ export default function App() {
     setPage(next);
     document.querySelector(".app-content")?.scrollTo({ top: 0 });
   }
+  const isHome = page === "accounts";
   return (
     <main
       className={`app-shell relative w-full h-dvh overflow-hidden bg-white theme-${page}`}
     >
       <style>{`
-        .app-shell {
-          --header-h: 116px;
-          --nav-h: 96px;
-        }
-        @media (max-height: 700px) {
-          .app-shell {
-            --header-h: 104px;
-            --nav-h: 86px;
-          }
-        }
-        @media (min-width: 520px) {
-          .app-shell {
-            width: 430px;
-            height: min(900px, 96dvh);
-            border-radius: 28px;
-            box-shadow: 0 22px 70px rgba(56, 34, 61, 0.2);
-          }
-        }
-      `}</style>
-      <Header page={page} navigate={navigate} />
+  .app-shell {
+    --header-h: 116px;
+    --nav-h: 96px;
+  }
+  @media (max-height: 700px) {
+    .app-shell {
+      --header-h: 104px;
+      --nav-h: 86px;
+    }
+  }
+  @media (min-width: 520px) {
+    .app-shell {
+      width: 430px;
+      height: min(900px, 96dvh);
+      border-radius: 28px;
+      box-shadow: 0 22px 70px rgba(56, 34, 61, 0.2);
+    }
+  }
+`}</style>
+      {isHome && <Header page={page} navigate={navigate} />}
       <div
         className="app-content absolute right-0 left-0 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        style={{ top: "var(--header-h)", bottom: "var(--nav-h)" }}
+        style={{
+          top: isHome ? "var(--header-h)" : 0,
+          bottom: "var(--nav-h)",
+        }}
       >
         {page === "accounts" && <AccountsPage navigate={navigate} />}
         {page === "interest" && <InterestPage />}
         {page === "transfer" && <TransferPage />}
+        {page === "transactions" && <TransactionsPage />}
         {page === "cards" && <CardsPage />}
         {page === "support" && <SupportPage />}
         {page === "details" && <DetailsPage navigate={navigate} />}
