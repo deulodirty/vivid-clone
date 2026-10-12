@@ -503,7 +503,7 @@ function AccountsPage({ navigate }: { navigate: (page: Page) => void }) {
           </strong>
 
           <small className="block -mt-0.5 text-[#8d8590] text-[13px]">
-            88,35 €
+            1,80 €
           </small>
         </button>
 
@@ -598,7 +598,7 @@ function InterestPage() {
         </small>
 
         <strong className="block mt-1 text-[clamp(2.5rem,12vw,3.25rem)] tracking-[-0.06em]">
-          88,35<span className="text-2xl"> €</span>
+          1,80<span className="text-2xl"> €</span>
         </strong>
       </section>
 
