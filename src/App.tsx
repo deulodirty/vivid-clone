@@ -241,10 +241,10 @@ function Header({
           ) : (
             <span className="relative -ml-1.5 inline-block w-10 h-10 shrink-0">
               <UserIcon className="w-10 h-10 fill-black/90" strokeWidth={1.6} />
-              <span className="absolute -top-1 -right-2 flex items-center justify-center w-6 h-6 text-[14px] font-semibold leading-none text-white bg-red-500 rounded-full z-10">
+              <span className="absolute top-1 right-1.5 flex items-center justify-center w-4 h-4 text-[12px] font-semibold leading-none text-white bg-red-500 rounded-full z-10">
                 3
               </span>
-              <div className="absolute inset-0 rounded-full border-[3px] border-white" />
+              <div className="absolute inset-0 rounded-full border-[7px] border-white" />
             </span>
           )}
           <div className="min-w-0 flex-1 pl-2">
@@ -353,13 +353,13 @@ function BottomNav({
 
   return (
     <nav
-      className="fixed z-30 left-1/2 -translate-x-1/2 w-[calc(100%-24px)] max-w-[406px] rounded-full h-[66px] px-1.5 flex items-center bg-white/96 border border-[#eee8f0] shadow-[0_8px_25px_rgba(52,31,57,0.12)] backdrop-blur-lg"
-      style={{ bottom: "max(1rem, env(safe-area-inset-bottom))" }}
+      className="fixed z-30 left-1/2 -translate-x-1/2 w-[calc(100%-24px)] max-w-[406px] rounded-full h-[60px] px-1.5 flex items-center bg-white/96 border border-[#eee8f0] shadow-[0_8px_25px_rgba(52,31,57,0.12)] backdrop-blur-lg"
+      style={{ bottom: "max(0.3rem, env(safe-area-inset-bottom))" }}
     >
       {nav.map((item) => (
         <button
           key={item.page}
-          className={`relative flex-1 min-w-0 h-[56px] border-0 flex flex-col items-center justify-center gap-0.5 rounded-full transition-colors ${
+          className={`relative flex-1 min-w-0 h-[50px] border-0 flex flex-col items-center justify-center gap-0.5 rounded-3xl px-1 transition-colors ${
             selected === item.page
               ? "bg-[#f3e9fb] text-[#7924d7]"
               : "bg-transparent text-[#090909]"
@@ -411,7 +411,7 @@ function AccountsPage({ navigate }: { navigate: (page: Page) => void }) {
       <section className="flex items-center justify-between gap-3 px-4 pt-2 pb-4">
         <div>
           <strong className="block text-[clamp(1.75rem,7vw,2rem)] tracking-[-0.045em] text-[#211a25]">
-            230,65 €
+            229.08 €
           </strong>
 
           <small className="block -mt-2 text-[#8d8590] text-sm">
@@ -451,7 +451,7 @@ function AccountsPage({ navigate }: { navigate: (page: Page) => void }) {
           </strong>
 
           <small className="block -mt-0.5 text-[#8d8590] text-[13px]">
-            230,65 €
+            229.08 €
           </small>
         </button>
 
@@ -633,28 +633,18 @@ function TransactionsPage() {
           id: "t1",
           name: "REWE Markt",
           detail: "Kartenzahlung · 14:32",
-          amount: -8.74,
-          balance: 3.44,
+          amount: -270.9,
+          balance: 229.08,
           icon: "card",
           tint: "bg-[#e8def7] text-[#7c21dd]",
         },
 
         {
           id: "t2",
-          name: "Gehalt",
-          detail: "Überweisung · 09:01",
-          amount: 185.0,
-          balance: 3.44,
-          icon: "bank",
-          tint: "bg-[#e8f7f0] text-[#22a06b]",
-        },
-
-        {
-          id: "t3",
-          name: "Spotify",
+          name: "Teresita K. Di Costa",
           detail: "Abo · 07:00",
-          amount: -9.99,
-          balance: 3.44,
+          amount: 500.0,
+          balance: 499.98,
           icon: "sparkle",
           tint: "bg-[#e8def7] text-[#7c21dd]",
         },
@@ -682,7 +672,7 @@ function TransactionsPage() {
           </small>
 
           <strong className="block text-[clamp(2.25rem,11vw,3rem)] font-extrabold text-[#211a25]">
-            <span>4,80</span> €
+            <span>1,80</span> €
           </strong>
 
           <span className="text-[#8d8590] text-lg -mt-3">
@@ -746,7 +736,7 @@ function TransactionsPage() {
             ))}
           </div>
 
-          <div className="w-full mb-4">
+          <div className="w-full mb-4 mt-6">
             <button className="block mx-auto text-center w-full py-2 bg-gray-50 rounded-2xl text-purple-500 text-xs">
               Alle Transaktionen anzeigen
             </button>
@@ -1195,7 +1185,7 @@ function ProfilePage() {
 
     // { label: "Telefonnummer", value: "+49 151 23456789" },
 
-    { label: "Geburtsdatum", value: "14. September 1992" },
+    { label: "Geburtsdatum", value: "14. September 1956" },
 
     { label: "IBAN", value: "DE70202208000045968471" },
     { label: "BIC / SWIFT", value: "SXPYDEHHXXX" },
@@ -1225,9 +1215,9 @@ function ProfilePage() {
 
         <strong className="mt-3 text-2xl">Teresita Karina Di Costa</strong>
 
-        <small className="mt-1 text-[#8f8792] text-[15px]">
+        {/* <small className="mt-1 text-[#8f8792] text-[15px]">
           Privatkunde seit 2022
-        </small>
+        </small> */}
 
         <span className="mt-3 px-4 py-2 rounded-xl text-[#248a62] bg-[#e8f7f0] text-sm font-bold">
           Identität bestätigt
