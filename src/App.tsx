@@ -2,6 +2,7 @@ import {
   ChevronDown,
   LucideGift,
   LucideLandmark,
+  ShoppingCart,
   UserIcon,
   X,
 } from "lucide-react";
@@ -19,6 +20,7 @@ import {
   HiOutlineCreditCard,
   HiOutlineReceiptPercent,
 } from "react-icons/hi2";
+import { GiCartwheel } from "react-icons/gi";
 
 type Page =
   | "accounts"
@@ -620,14 +622,16 @@ function TransactionsPage() {
     detail: string;
     amount: number;
     balance: number;
-    icon: IconName;
-    tint: string;
+    kind: "icon" | "initials";
+    icon?: IconName; // used when kind === "icon"
+    initials?: string; // used when kind === "initials"
+    color?: string; // bg color for initials circle
+    tint: string; // tint for the icon circle
   };
 
   const groups: { label: string; items: Tx[] }[] = [
     {
       label: "Heute",
-
       items: [
         {
           id: "t1",
@@ -635,18 +639,20 @@ function TransactionsPage() {
           detail: "Kartenzahlung · 14:32",
           amount: -270.9,
           balance: 229.08,
-          icon: "card",
-          tint: "bg-[#e8def7] text-[#7c21dd]",
+          kind: "icon",
+          icon: "receipt", // no—use the cart directly below
+          tint: "bg-[#2b2a2c] text-white",
         },
-
         {
           id: "t2",
           name: "Teresita K. Di Costa",
-          detail: "Abo · 07:00",
+          detail: "Überweisung · 09:01",
           amount: 500.0,
           balance: 499.98,
-          icon: "sparkle",
-          tint: "bg-[#e8def7] text-[#7c21dd]",
+          kind: "initials",
+          initials: "TD",
+          color: "bg-orange-600/90 text-white",
+          tint: "",
         },
       ],
     },
@@ -670,16 +676,13 @@ function TransactionsPage() {
           <small className="block text-[#756f78] text-lg -mb-3">
             Gesamt-Cashback
           </small>
-
           <strong className="block text-[clamp(2.25rem,11vw,3rem)] font-extrabold text-[#211a25]">
             <span>1,80</span> €
           </strong>
-
           <span className="text-[#8d8590] text-lg -mt-3">
             1,20 € diesen Monat verdient
           </span>
         </div>
-
         <div className="-mx-4 mt-3">
           <img src="/trx.jpg" alt="" />
         </div>
@@ -688,7 +691,7 @@ function TransactionsPage() {
       {groups.map((group) => (
         <section
           key={group.label}
-          className=" pt-5 px-4 mx-4 rounded-2xl bg-white shadow-[0_5px_17px_rgba(62,39,68,0.05)] overflow-hidden"
+          className="pt-5 px-4 mx-4 rounded-2xl bg-white shadow-[0_5px_17px_rgba(62,39,68,0.05)] overflow-hidden"
         >
           <h3 className="m-0 mb-2 text-xl font-semibold text-[#141314]">
             Aktivitäten
@@ -697,11 +700,19 @@ function TransactionsPage() {
           <div>
             {group.items.map((tx) => (
               <div key={tx.id} className="flex items-center gap-3 py-3.5">
-                <span
-                  className={`w-[46px] h-[46px] rounded-xl grid place-items-center ${tx.tint}`}
-                >
-                  <Icon name={tx.icon} size={24} />
-                </span>
+                {tx.kind === "initials" ? (
+                  <span
+                    className={`w-[46px] h-[46px] rounded-xl grid place-items-center text-base font-bold ${tx.color}`}
+                  >
+                    {tx.initials}
+                  </span>
+                ) : (
+                  <span
+                    className={`w-[46px] h-[46px] rounded-xl grid place-items-center ${tx.tint}`}
+                  >
+                    <ShoppingCart size={22} />
+                  </span>
+                )}
 
                 <div className="flex-1 min-w-0">
                   <small className="flex items-center gap-3 mt-0.5 text-[#9a929d] text-[15px]">
