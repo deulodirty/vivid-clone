@@ -218,22 +218,17 @@ const meta: Record<Page, { title: string; back?: boolean }> = {
 
 function Header({
   page,
-
   navigate,
 }: {
   page: Page;
-
   navigate: (page: Page) => void;
 }) {
   const item = meta[page];
 
   return (
-    <header
-      className={`absolute z-20 top-0 right-0 left-0 h-[var(--header-h)] px-3 sm:px-4 backdrop-blur-xl bg-gray-50/95`}
-    >
+    <header className="relative z-20 shrink-0 h-[var(--header-h)] px-3 sm:px-4 backdrop-blur-xl bg-gray-50/95">
       <div className="h-full flex items-center justify-between gap-3">
         {/* LEFT pill */}
-
         <div className="flex items-center rounded-full bg-white px-2 py-1.5 min-w-0">
           {item.back ? (
             <button
@@ -246,15 +241,12 @@ function Header({
           ) : (
             <span className="relative -ml-1.5 inline-block w-10 h-10 shrink-0">
               <UserIcon className="w-10 h-10 fill-black/90" strokeWidth={1.6} />
-
               <span className="absolute -top-1 -right-2 flex items-center justify-center w-6 h-6 text-[14px] font-semibold leading-none text-white bg-red-500 rounded-full z-10">
                 3
               </span>
-
               <div className="absolute inset-0 rounded-full border-[3px] border-white" />
             </span>
           )}
-
           <div className="min-w-0 flex-1 pl-2">
             <button
               onClick={() => navigate("profile")}
@@ -264,10 +256,8 @@ function Header({
               <p className="text-sm sm:text-base font-bold ml-1 truncate">
                 {item.title}
               </p>
-
               <ChevronDown size={18} className="shrink-0" />
             </button>
-
             <small
               className={`block text-xs truncate ${
                 page === "transfer" || page === "cards"
@@ -285,7 +275,6 @@ function Header({
         </div>
 
         {/* RIGHT pill */}
-
         <div className="flex items-center gap-5 bg-white px-3 py-2.5 rounded-full shrink-0">
           {page === "accounts" && (
             <button
@@ -296,13 +285,11 @@ function Header({
                 size={30}
                 className="absolute fill-[#7c21dc] text-[#7c21dc]"
               />
-
               <span className="relative text-[14px] font-bold leading-none text-white pb-1.5">
                 ?
               </span>
             </button>
           )}
-
           <button
             className={` ${
               page === "support" ? "text-white bg-[#7c21dc]" : "text-[#4a3b50]"
@@ -366,10 +353,8 @@ function BottomNav({
 
   return (
     <nav
-      className="absolute z-30 left-3 right-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] mx-auto w-auto max-w-[406px] rounded-full h-[66px] px-1.5 flex items-center bg-white/96 border border-[#eee8f0] shadow-[0_8px_25px_rgba(52,31,57,0.12)] backdrop-blur-lg"
-      style={{
-        bottom: "max(1rem, env(safe-area-inset-bottom))",
-      }}
+      className="fixed z-30 left-1/2 -translate-x-1/2 w-[calc(100%-24px)] max-w-[406px] rounded-full h-[66px] px-1.5 flex items-center bg-white/96 border border-[#eee8f0] shadow-[0_8px_25px_rgba(52,31,57,0.12)] backdrop-blur-lg"
+      style={{ bottom: "max(1rem, env(safe-area-inset-bottom))" }}
     >
       {nav.map((item) => (
         <button
@@ -382,7 +367,6 @@ function BottomNav({
           onClick={() => navigate(item.page)}
         >
           {item.icon}
-
           <span className="text-[10px] sm:text-[11px] font-semibold">
             {item.label}
           </span>
@@ -1318,7 +1302,6 @@ export default function App() {
 
   function navigate(next: Page) {
     setPage(next);
-
     document.querySelector(".app-content")?.scrollTo({ top: 0 });
   }
 
@@ -1339,71 +1322,45 @@ export default function App() {
 
   return (
     <main
-      className={`app-shell relative mx-auto w-full h-dvh overflow-hidden theme-${page}`}
+      className={`app-shell fixed inset-0 mx-auto flex flex-col overflow-hidden theme-${page}`}
+      style={{ maxWidth: 430 }}
     >
       <style>{`
-
         .app-shell {
-
           --header-h: 88px;
-
-          --nav-h: 82px;
-
+          --nav-h: 96px;
         }
-
         @media (max-height: 700px) {
-
           .app-shell {
-
             --header-h: 84px;
-
-            --nav-h: 78px;
-
+            --nav-h: 90px;
           }
-
         }
-
         @media (min-width: 520px) {
-
           .app-shell {
-
-            width: 430px;
-
             height: min(900px, 96dvh);
-
+            top: 50%;
+            bottom: auto;
+            transform: translateY(-50%);
             border-radius: 28px;
-
             box-shadow: 0 22px 70px rgba(56, 34, 61, 0.2);
-
           }
-
         }
-
       `}</style>
 
       {isHome && <Header page={page} navigate={navigate} />}
 
       <div
-        className={`app-content absolute right-0 left-0 bottom-0 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${contentBg}`}
-        style={{ top: isHome ? "var(--header-h)" : 0 }}
+        className={`app-content flex-1 min-h-0 overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${contentBg}`}
+        style={{ paddingBottom: "var(--nav-h)" }}
       >
-        <div style={{ paddingBottom: "var(--nav-h)" }}>
-          {page === "accounts" && <AccountsPage navigate={navigate} />}
-
-          {page === "interest" && <InterestPage />}
-
-          {page === "transfer" && <TransferPage />}
-
-          {page === "transactions" && <TransactionsPage />}
-
-          {page === "cards" && <CardsPage />}
-
-          {page === "support" && <SupportPage />}
-
-          {/* {page === "details" && <DetailsPage navigate={navigate} />} */}
-
-          {page === "profile" && <ProfilePage />}
-        </div>
+        {page === "accounts" && <AccountsPage navigate={navigate} />}
+        {page === "interest" && <InterestPage />}
+        {page === "transfer" && <TransferPage />}
+        {page === "transactions" && <TransactionsPage />}
+        {page === "cards" && <CardsPage />}
+        {page === "support" && <SupportPage />}
+        {page === "profile" && <ProfilePage />}
       </div>
 
       <BottomNav page={page} navigate={navigate} />
