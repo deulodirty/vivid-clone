@@ -274,19 +274,19 @@ function BottomNav({
         ? null
         : page;
   return (
-    <nav className="fixed z-30 bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-24px)] max-w-[406px] rounded-full h-[76px] px-2 pt-1.5 pb-1.5 flex items-center bg-white/96 border border-[#eee8f0] shadow-[0_8px_25px_rgba(52,31,57,0.12)] backdrop-blur-lg">
+    <nav className="fixed z-30 bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-24px)] max-w-[406px] rounded-full h-[70px] px-2 pt-1.5 pb-1.5 flex items-center bg-white/96 border border-[#eee8f0] shadow-[0_8px_25px_rgba(52,31,57,0.12)] backdrop-blur-lg">
       {nav.map((item) => (
         <button
           key={item.page}
-          className={`relative flex-1 h-[60px] border-0 flex flex-col items-center justify-center gap-1 rounded-2xl transition-colors ${
+          className={`relative flex-1 h-[60px] border-0 flex flex-col items-center justify-center rounded-2xl transition-colors ${
             selected === item.page
-              ? "bg-[#f3e9fb] text-[#7924d7]"
-              : "bg-transparent text-[#918a94]"
+              ? "bg-[#f3e9fb] rounded-full text-[#7924d7]"
+              : "bg-transparent text-[#090909]"
           }`}
           onClick={() => navigate(item.page)}
         >
           <Icon name={item.icon} size={28} />
-          <span className="text-[15px] font-semibold">{item.label}</span>
+          <span className="text-[12px] font-semibold">{item.label}</span>
         </button>
       ))}
     </nav>
@@ -297,7 +297,7 @@ function AccountsPage({ navigate }: { navigate: (page: Page) => void }) {
   const [bannerOpen, setBannerOpen] = useState(true);
 
   return (
-    <div className="min-h-full pb-4">
+    <div className="min-h-full">
       {bannerOpen && (
         <section className="relative mx-3 mt-3 mb-4 px-4 py-4 rounded-2xl bg-white shadow-[0_8px_16px_-4px_rgba(62,39,68,0.18)]">
           <div className="flex items-center justify-center gap-2.5">
@@ -360,7 +360,7 @@ function AccountsPage({ navigate }: { navigate: (page: Page) => void }) {
             Money Pocket
           </strong>
           <small className="block -mt-0.5 text-[#8d8590] text-[13px]">
-            142,30 €
+            230,65 €
           </small>
         </button>
 
@@ -532,7 +532,7 @@ function TransactionsPage() {
   }
 
   return (
-    <div className="min-h-full bg-[#faf8fa] mt-6">
+    <div className="min-h-full bg-[#faf8fa] pt-6">
       <section className="px-[17px] pt-4 pb-5 bg-white">
         <div className="mt-1 flex flex-col">
           <small className="block text-[#756f78] text-lg -mb-3">
@@ -586,8 +586,6 @@ function TransactionsPage() {
           </div>
         </section>
       ))}
-
-      <div className="h-6" />
     </div>
   );
 }
@@ -686,9 +684,10 @@ function TransferPage() {
         />
       )}
       <section
-        className={`absolute z-[11] right-0 bottom-0 left-0 min-h-[400px] px-5 pt-5 pb-6 rounded-t-2xl bg-white transition-transform duration-300 ${
+        className={`absolute z-[11] right-0 bottom-0 left-0 min-h-[400px] px-5 pt-5 rounded-t-2xl bg-white transition-transform duration-300 ${
           sheetOpen ? "translate-y-0" : "translate-y-full"
         }`}
+        style={{ paddingBottom: "calc(var(--nav-h) + 16px)" }}
       >
         <div className="w-12 h-1.5 mx-auto mb-4 rounded-full bg-[#e0d8e3]" />
         <h2 className="mt-0 mb-3 text-3xl">Überweisen</h2>
@@ -746,7 +745,7 @@ function CardsPage() {
   const [color, setColor] = useState("#7623dc");
   const colors = ["#7623dc", "#3acbb9", "#f14b76", "#f59a31", "#d8c832"];
   return (
-    <div className="min-h-full px-3 pt-8 pb-6 text-center bg-gradient-to-br from-[#d3aff0] via-[#f4dfe8] to-[#d6a4ef]">
+    <div className="min-h-full px-3 pt-8 pb-0 text-center ">
       <div className="w-[280px] mx-auto mb-7 p-1 flex rounded-[20px] bg-white/22">
         <button
           className={`flex-1 p-3 border-0 rounded-[17px] text-lg ${
@@ -808,7 +807,7 @@ function SupportPage() {
   }
   return (
     <div className="min-h-full flex flex-col bg-white">
-      <section className="flex-1 px-[15px] pt-[17px] pb-[100px]">
+      <section className="flex-1 px-[15px] pt-[17px] pb-[80px]">
         <div className="flex justify-end my-3">
           <p className="max-w-[79%] m-0 px-4 py-3.5 rounded-[18px_8px_18px_18px] text-white bg-[#7b1ddd] text-lg leading-[1.4] shadow-[0_3px_9px_rgba(111,22,200,0.15)]">
             Guten Morgen, ich brauche Hilfe mit einer Zahlung.
@@ -852,7 +851,10 @@ function SupportPage() {
           </div>
         ))}
       </section>
-      <section className="absolute z-[5] right-0 bottom-0 left-0 px-3 pt-3 pb-4 bg-gradient-to-b from-transparent to-white">
+      <section
+        className="absolute z-[5] right-0 left-0 px-3 pt-3"
+        style={{ bottom: "calc(var(--nav-h) + 8px)" }}
+      >
         <div className="h-[64px] p-1.5 flex items-center rounded-[32px] bg-[#f5f1f6]">
           <button className="w-14 h-14 border-0 grid place-items-center text-[#7b27d4] bg-transparent">
             <Icon name="plus" size={26} />
@@ -890,7 +892,7 @@ function DetailsPage({ navigate }: { navigate: (page: Page) => void }) {
     { label: "Bank", value: "Vivid Money S.A." },
   ];
   return (
-    <div className="min-h-full px-[14px] pt-[18px] pb-6 bg-[#f8f5f9]">
+    <div className="min-h-full px-[14px] pt-[18px] pb-3 bg-[#f8f5f9]">
       <section className="px-5 py-6 rounded-2xl text-white text-center bg-gradient-to-br from-[#5613ae] to-[#9035e8] shadow-[0_10px_25px_rgba(104,29,176,0.2)]">
         <span className="w-16 h-16 mx-auto grid place-items-center rounded-2xl bg-white/15">
           <Icon name="bank" size={32} />
@@ -956,7 +958,7 @@ function ProfilePage() {
     { label: "Wohnadresse", value: "Rosenthaler Straße 43, 10178 Berlin" },
   ];
   return (
-    <div className="min-h-full px-[14px] pt-[18px] pb-6 bg-[#f8f5f9]">
+    <div className="min-h-full px-[14px] pt-[18px] pb-3 bg-[#f8f5f9]">
       <section className="pt-2 pb-6 flex flex-col items-center">
         <span className="relative flex-none w-[96px] h-[96px] overflow-hidden rounded-full bg-gradient-to-br from-[#d9a88c] to-[#684337] shadow-[0_6px_18px_rgba(70,42,75,0.16)]">
           <i className="absolute top-[14px] left-[32px] w-9 h-[39px] rounded-full bg-[#edba99]" />
@@ -1020,46 +1022,59 @@ export default function App() {
     document.querySelector(".app-content")?.scrollTo({ top: 0 });
   }
   const isHome = page === "accounts";
+
+  const contentBg =
+    page === "transfer"
+      ? "bg-[#c7ace4]"
+      : page === "cards"
+        ? "bg-gradient-to-br from-[#d3aff0] via-[#f4dfe8] to-[#d6a4ef]"
+        : page === "interest"
+          ? "bg-[#faf8fa]"
+          : page === "transactions"
+            ? "bg-[#faf8fa]"
+            : page === "details" || page === "profile"
+              ? "bg-[#f8f5f9]"
+              : "bg-white";
+
   return (
     <main
-      className={`app-shell relative w-full h-dvh overflow-hidden bg-white theme-${page}`}
+      className={`app-shell relative w-full h-dvh overflow-hidden theme-${page}`}
     >
       <style>{`
-  .app-shell {
-    --header-h: 116px;
-    --nav-h: 96px;
-  }
-  @media (max-height: 700px) {
-    .app-shell {
-      --header-h: 104px;
-      --nav-h: 86px;
-    }
-  }
-  @media (min-width: 520px) {
-    .app-shell {
-      width: 430px;
-      height: min(900px, 96dvh);
-      border-radius: 28px;
-      box-shadow: 0 22px 70px rgba(56, 34, 61, 0.2);
-    }
-  }
-`}</style>
+        .app-shell {
+          --header-h: 116px;
+          --nav-h: 86px;
+        }
+        @media (max-height: 700px) {
+          .app-shell {
+            --header-h: 104px;
+            --nav-h: 80px;
+          }
+        }
+        @media (min-width: 520px) {
+          .app-shell {
+            width: 430px;
+            height: min(900px, 96dvh);
+            border-radius: 28px;
+            box-shadow: 0 22px 70px rgba(56, 34, 61, 0.2);
+          }
+        }
+      `}</style>
       {isHome && <Header page={page} navigate={navigate} />}
       <div
-        className="app-content absolute right-0 left-0 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        style={{
-          top: isHome ? "var(--header-h)" : 0,
-          bottom: "var(--nav-h)",
-        }}
+        className={`app-content absolute right-0 left-0 bottom-0 overflow-x-hidden overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${contentBg}`}
+        style={{ top: isHome ? "var(--header-h)" : 0 }}
       >
-        {page === "accounts" && <AccountsPage navigate={navigate} />}
-        {page === "interest" && <InterestPage />}
-        {page === "transfer" && <TransferPage />}
-        {page === "transactions" && <TransactionsPage />}
-        {page === "cards" && <CardsPage />}
-        {page === "support" && <SupportPage />}
-        {page === "details" && <DetailsPage navigate={navigate} />}
-        {page === "profile" && <ProfilePage />}
+        <div style={{ paddingBottom: "var(--nav-h)" }}>
+          {page === "accounts" && <AccountsPage navigate={navigate} />}
+          {page === "interest" && <InterestPage />}
+          {page === "transfer" && <TransferPage />}
+          {page === "transactions" && <TransactionsPage />}
+          {page === "cards" && <CardsPage />}
+          {page === "support" && <SupportPage />}
+          {page === "details" && <DetailsPage navigate={navigate} />}
+          {page === "profile" && <ProfilePage />}
+        </div>
       </div>
       <BottomNav page={page} navigate={navigate} />
     </main>
