@@ -163,23 +163,17 @@ function Header({
   navigate: (page: Page) => void;
 }) {
   const item = meta[page];
-  const headerBg =
-    page === "transfer"
-      ? "bg-[#c7ace4] border-transparent"
-      : page === "cards"
-        ? "bg-[rgba(238,211,240,0.78)] border-transparent text-[#3b174b]"
-        : "bg-[#f3eef5] border-[#e9e1ec]";
 
   return (
     <header
-      className={`absolute z-20 top-0 right-0 left-0 h-[var(--header-h)] px-4 pt-2 backdrop-blur-xl bg-gray-50`}
+      className={`absolute z-20 top-0 right-0 left-0 h-(--header-h) px-4 backdrop-blur-xl bg-gray-50`}
     >
       <div className="h-full flex items-center justify-between gap-3">
-        {/* LEFT pill: back/avatar + title + subtitle */}
+        {/* LEFT pill */}
         <div className="flex items-center rounded-full bg-white px-2 py-1.5 min-w-0 flex-1">
           {item.back ? (
             <button
-              className="w-[52px] h-[52px] border-0 rounded-full grid place-items-center text-[#4a3b50] bg-[#f7f2f8]"
+              className="w-[52px] h-[52px] border-0 rounded-full grid place-items-center text-[#4a3b50] bg-white shrink-0"
               onClick={() => navigate("accounts")}
               aria-label="Zurück"
             >
@@ -221,7 +215,7 @@ function Header({
           </div>
         </div>
 
-        {/* RIGHT pill: help + settings */}
+        {/* RIGHT pill */}
         <div className="flex items-center gap-5 bg-white px-4 py-3 rounded-full shrink-0">
           {page === "accounts" && (
             <button
@@ -251,7 +245,6 @@ function Header({
     </header>
   );
 }
-
 const nav: { page: Page; label: string; icon: IconName }[] = [
   { page: "accounts", label: "Konten", icon: "home" },
   { page: "transactions", label: "Transaktionen", icon: "receipt" },
@@ -274,13 +267,18 @@ function BottomNav({
         ? null
         : page;
   return (
-    <nav className="fixed z-30 bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-24px)] max-w-[406px] rounded-full h-[70px] px-2 pt-1.5 pb-1.5 flex items-center bg-white/96 border border-[#eee8f0] shadow-[0_8px_25px_rgba(52,31,57,0.12)] backdrop-blur-lg">
+    <nav
+      className="fixed z-30 left-1/2 -translate-x-1/2 w-[calc(100%-24px)] max-w-[406px] rounded-full h-[70px] px-2 pt-1.5 pb-1.5 flex items-center bg-white/96 border border-[#eee8f0] shadow-[0_8px_25px_rgba(52,31,57,0.12)] backdrop-blur-lg"
+      style={{
+        bottom: "max(1rem, env(safe-area-inset-bottom))",
+      }}
+    >
       {nav.map((item) => (
         <button
           key={item.page}
-          className={`relative flex-1 h-[60px] border-0 flex flex-col items-center justify-center rounded-2xl transition-colors ${
+          className={`relative flex-1 h-[60px] border-0 flex flex-col items-center justify-center rounded-full transition-colors ${
             selected === item.page
-              ? "bg-[#f3e9fb] rounded-full text-[#7924d7]"
+              ? "bg-[#f3e9fb] text-[#7924d7]"
               : "bg-transparent text-[#090909]"
           }`}
           onClick={() => navigate(item.page)}
@@ -1042,13 +1040,13 @@ export default function App() {
     >
       <style>{`
         .app-shell {
-          --header-h: 116px;
-          --nav-h: 86px;
+          --header-h: 124px;
+          --nav-h: 90px;
         }
         @media (max-height: 700px) {
           .app-shell {
-            --header-h: 104px;
-            --nav-h: 80px;
+            --header-h: 112px;
+            --nav-h: 82px;
           }
         }
         @media (min-width: 520px) {
